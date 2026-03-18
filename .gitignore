@@ -1,1 +1,25 @@
-.dockerigore
+# Node modules
+node_modules/
+
+# Build output
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables (sensitive)
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker files (optional)
+docker-compose.override.yml
+
+# IDE / Editor configs
+.vscode/
+.idea/
+*.iml
