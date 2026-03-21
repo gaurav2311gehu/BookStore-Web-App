@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom';
 
+<<<<<<< HEAD
 export default function Cart({ cartItems, removeFromCart }: { cartItems: any[], removeFromCart: (id: string) => void }) {
+=======
+export default function Cart({ cartItems }: { cartItems: any[] }) {
+>>>>>>> 922ea95f4832ebe5abaad01f2f500d6320d5ed31
   const total = cartItems.reduce((sum, item) => sum + (item.price || 0), 0);
 
   return (
@@ -16,6 +20,7 @@ export default function Cart({ cartItems, removeFromCart }: { cartItems: any[], 
         <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
           <ul className="divide-y divide-gray-200">
             {cartItems.map((item, index) => (
+<<<<<<< HEAD
               <li key={item._id} className="p-4 sm:p-6 flex justify-between items-center">
   <div>
     <h3 className="text-lg font-medium text-gray-900">{item.title}</h3>
@@ -35,6 +40,17 @@ export default function Cart({ cartItems, removeFromCart }: { cartItems: any[], 
     </button>
   </div>
 </li>
+=======
+              <li key={`${item.id}-${index}`} className="p-4 sm:p-6 flex justify-between items-center">
+                <div>
+                  <h3 className="text-lg font-medium text-gray-900">{item.title}</h3>
+                  <p className="text-sm text-gray-500">{item.author}</p>
+                </div>
+                <div className="text-lg font-semibold text-gray-900">
+                  ${item.price?.toFixed(2)}
+                </div>
+              </li>
+>>>>>>> 922ea95f4832ebe5abaad01f2f500d6320d5ed31
             ))}
           </ul>
           <div className="bg-gray-50 p-6 border-t border-gray-200 flex justify-between items-center">
