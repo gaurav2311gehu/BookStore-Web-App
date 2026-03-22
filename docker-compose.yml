@@ -1,16 +1,13 @@
-version: "3.8"
-
 services:
   frontend:
-    build: ./frontend
     image: ${DOCKER_USERNAME}/bookstore-frontend:latest
     ports:
       - "3000:3000"
     depends_on:
       - backend
+    restart: always
 
   backend:
-    build: ./backend
     image: ${DOCKER_USERNAME}/bookstore-backend:latest
     ports:
       - "5000:5000"
@@ -18,8 +15,15 @@ services:
       - MONGO_URI=mongodb://mongo:27017/bookstore
     depends_on:
       - mongo
+    restart: always
 
   mongo:
     image: mongo:latest
     ports:
       - "27017:27017"
+    volumes:
+      - mongo_data:/data/db   
+    restart: always
+
+volumes:
+  mongo_data:
