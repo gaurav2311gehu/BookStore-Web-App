@@ -1,37 +1,3 @@
-<<<<<<< HEAD
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { getBookById } from "../api/api";
-
-export default function BookDetail({ addToCart }) {
-  const { id } = useParams();
-  const [book, setBook] = useState(null);
-
-  useEffect(() => {
-    getBookById(id)
-      .then((res) => setBook(res.data))
-      .catch((err) => console.error(err));
-  }, [id]);
-
-  if (!book) return <div className="p-4">Loading...</div>;
-
-  return (
-    <div className="p-6 max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">{book.title}</h1>
-      <p className="text-gray-600 mb-2">by {book.author}</p>
-      <p className="mb-4">₹{book.price}</p>
-      <p className="mb-6">{book.description}</p>
-
-      <button
-        onClick={() => addToCart(book)}
-        className="bg-green-600 text-white px-4 py-2 rounded"
-      >
-        Add to Cart
-      </button>
-    </div>
-  );
-}
-=======
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getBookById } from '../api/api';
@@ -51,13 +17,21 @@ export default function BookDetail({ addToCart }: { addToCart: (book: any) => vo
         }
       } catch (err) {
         console.error('Failed to fetch book details, using mock data.', err);
-        // Mock data fallback
+
+        // fallback mock data
         const mockBooks: Record<string, any> = {
-          '1': { id: '1', title: 'The DevOps Handbook', author: 'Gene Kim', price: 29.99, description: 'How to Create World-Class Agility, Reliability, and Security in Technology Organizations.' },
-          '2': { id: '2', title: 'Continuous Delivery', author: 'Jez Humble', price: 34.99, description: 'Reliable Software Releases through Build, Test, and Deployment Automation.' },
-          '3': { id: '3', title: 'Site Reliability Engineering', author: 'Niall Richard Murphy', price: 39.99, description: 'How Google Runs Production Systems.' },
+          '1': { _id: '1', title: 'The DevOps Handbook', author: 'Gene Kim', price: 29.99, description: 'How to Create World-Class Agility, Reliability, and Security in Technology Organizations.' },
+          '2': { _id: '2', title: 'Continuous Delivery', author: 'Jez Humble', price: 34.99, description: 'Reliable Software Releases through Build, Test, and Deployment Automation.' },
+          '3': { _id: '3', title: 'Site Reliability Engineering', author: 'Niall Richard Murphy', price: 39.99, description: 'How Google Runs Production Systems.' },
         };
-        setBook(mockBooks[id || ''] || { id, title: 'Unknown Book', author: 'Unknown', price: 0, description: 'No description available.' });
+
+        setBook(mockBooks[id || ''] || {
+          _id: id,
+          title: 'Unknown Book',
+          author: 'Unknown',
+          price: 0,
+          description: 'No description available.'
+        });
       } finally {
         setLoading(false);
       }
@@ -71,15 +45,22 @@ export default function BookDetail({ addToCart }: { addToCart: (book: any) => vo
 
   return (
     <div className="p-6 max-w-3xl mx-auto">
-      <Link to="/" className="text-blue-600 hover:underline mb-6 inline-block">&larr; Back to Books</Link>
+      <Link to="/" className="text-blue-600 hover:underline mb-6 inline-block">
+        ← Back to Books
+      </Link>
+
       <div className="bg-white border border-gray-200 rounded-lg p-8 shadow-sm">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">{book.title}</h1>
         <p className="text-xl text-gray-600 mb-4">by {book.author}</p>
-        <p className="text-2xl font-semibold text-green-600 mb-6">${book.price?.toFixed(2)}</p>
-        <div className="prose text-gray-700 mb-8">
+        <p className="text-2xl font-semibold text-green-600 mb-6">
+          ₹{book.price}
+        </p>
+
+        <div className="text-gray-700 mb-8">
           <p>{book.description}</p>
         </div>
-        <button 
+
+        <button
           onClick={() => {
             addToCart(book);
             navigate('/cart');
@@ -92,4 +73,3 @@ export default function BookDetail({ addToCart }: { addToCart: (book: any) => vo
     </div>
   );
 }
->>>>>>> 922ea95f4832ebe5abaad01f2f500d6320d5ed31
