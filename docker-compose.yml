@@ -6,6 +6,7 @@ services:
     depends_on:
       - backend
     restart: always
+    
 
   backend:
     image: ${DOCKER_USERNAME}/bookstore-backend:latest
