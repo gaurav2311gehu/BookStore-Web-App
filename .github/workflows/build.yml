@@ -41,7 +41,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            cd /Bookstore-Web-App
+            cd /BookStore-Web-App
 
             git pull origin main
 
