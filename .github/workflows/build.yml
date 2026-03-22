@@ -50,7 +50,6 @@ jobs:
             # Pull latest images
             docker compose pull
 
-            # Restart containers
             docker compose down
             docker compose up -d
 
