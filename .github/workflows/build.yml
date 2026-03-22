@@ -54,7 +54,7 @@ jobs:
             # Export env manually (IMPORTANT)
             export DOCKER_USERNAME=${DOCKER_USERNAME}
 
-            # Run docker with sudo (CI safe way)
+            
             sudo docker compose pull
 
             sudo docker compose down
