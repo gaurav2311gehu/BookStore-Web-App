@@ -25,15 +25,15 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
-      # ✅ Build images using docker-compose
       - name: Build services
         run: docker compose build
 
-      # ✅ Push images to DockerHub
       - name: Push images
         run: docker compose push
 
-      # ✅ Deploy on EC2 using docker-compose
+      - name: Logout from Docker Hub
+        run: docker logout
+
       - name: SSH into EC2 and deploy
         uses: appleboy/ssh-action@v0.1.5
         with:
@@ -41,7 +41,9 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            cd ~/bookstore-web-app
+            cd ~/Bookstore-Web-App
+
+            git pull origin main
 
             # Pull latest images
             docker compose pull
@@ -49,3 +51,8 @@ jobs:
             # Restart containers
             docker compose down
             docker compose up -d
+
+            docker image prune -f
+
+            echo "Running containers:"
+            docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
