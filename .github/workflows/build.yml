@@ -45,21 +45,17 @@ jobs:
 
             git config --global --add safe.directory /BookStore-Web-App
 
-            # Fix repo ownership
             sudo chown -R $USER:$USER /BookStore-Web-App
 
             cd /BookStore-Web-App
 
             git pull origin main
 
-            # Export env manually (IMPORTANT)
             export DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
 
-            
-            sudo docker compose pull
-
-            sudo docker compose down
-            sudo docker compose up -d
+            sudo -E docker compose pull    
+            sudo -E docker compose down    
+            sudo -E docker compose up -d   
 
             sudo docker image prune -f
 
