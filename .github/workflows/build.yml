@@ -47,7 +47,7 @@ jobs:
 
             git pull origin main
 
-            # Pull latest images
+            # Pull latest image
             docker compose pull
 
             docker compose down
