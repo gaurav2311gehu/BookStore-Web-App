@@ -43,17 +43,24 @@ jobs:
           script: |
 
             git config --global --add safe.directory /BookStore-Web-App
+
+            # Fix repo ownership
+            sudo chown -R $USER:$USER /BookStore-Web-App
+
             cd /BookStore-Web-App
 
             git pull origin main
 
-            # Pull latest image
-            docker compose pull
+            # Export env manually (IMPORTANT)
+            export DOCKER_USERNAME=${DOCKER_USERNAME}
 
-            docker compose down
-            docker compose up -d
+            # Run docker with sudo (CI safe way)
+            sudo docker compose pull
 
-            docker image prune -f
+            sudo docker compose down
+            sudo docker compose up -d
+
+            sudo docker image prune -f
 
             echo "Running containers:"
-            docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+            sudo docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
